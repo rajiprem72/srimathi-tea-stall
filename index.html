@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Srimathi Tea Stall - Digital Menu</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>☕ Srimathi Tea Stall 🫖</h1>
+  <p>Fresh, Hot & Made with Love</p>
+
+  <div class="menu-item">
+    <span>Tea</span> <span>₹10</span>
+    <button onclick="decrease('tea')">-</button>
+    <span id="tea-qty">0</span>
+    <button onclick="increase('tea')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Coffee</span> <span>₹15</span>
+    <button onclick="decrease('coffee')">-</button>
+    <span id="coffee-qty">0</span>
+    <button onclick="increase('coffee')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Biscuit A</span> <span>₹5</span>
+    <button onclick="decrease('biscuitA')">-</button>
+    <span id="biscuitA-qty">0</span>
+    <button onclick="increase('biscuitA')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Biscuit B</span> <span>₹3</span>
+    <button onclick="decrease('biscuitB')">-</button>
+    <span id="biscuitB-qty">0</span>
+    <button onclick="increase('biscuitB')">+</button>
+  </div>
+
+  <h2>Total: ₹<span id="total">0</span></h2>
+  <a id="payLink" href="#" target="_blank">
+    <button>Pay with GPay</button>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>
