@@ -35,7 +35,7 @@ function update() {
   document.getElementById("total").innerText = total;
 
   // Change UPI ID here 👇
-  let upiId = "srimathitea@upi";  
+  let upiId = "premanandhan@okhdfcbank";  
   let name = "Srimathi Tea Stall";
   let link = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR`;
 
