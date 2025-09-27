@@ -24,6 +24,9 @@
       height: 200px;
     }
   </style>
+<!-- Add this in your HTML head (before </head>) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 </head>
 <body>
   <h1>☕ Srimathi Tea Stall 🫖</h1>
@@ -96,12 +99,12 @@
   <a id="payLink" href="#" target="_blank">
     <button>Pay with UPI</button>
   </a>
+<!-- QR Fallback for Desktop -->
+<div id="qrContainer" style="display:none; text-align:center; margin-top:20px;">
+  <p>Scan this QR to Pay</p>
+  <div id="qrCode"></div>
+</div>
 
-  <!-- QR Fallback for Desktop -->
-  <div id="qrContainer">
-    <p>Scan this QR to Pay</p>
-    <img id="qrCode" src="" alt="UPI QR Code">
-  </div>
 
   <script>
     let prices = {
