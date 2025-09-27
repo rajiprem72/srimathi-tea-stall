@@ -34,7 +34,149 @@ function decrease(item) {
   }
 }
 
-function update() {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Srimathi Tea Stall - Digital Menu</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .designer-note {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      text-align: right;
+      color: gray;
+    }
+    #qrContainer {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    #qrContainer img {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>☕ Srimathi Tea Stall 🫖</h1>
+  <p>Fresh, Hot & Made with Love</p>
+
+  <div class="menu-item">
+    <span>Tea</span> <span>₹10</span>
+    <button onclick="decrease('tea')">-</button>
+    <span id="tea-qty">0</span>
+    <button onclick="increase('tea')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Coffee</span> <span>₹15</span>
+    <button onclick="decrease('coffee')">-</button>
+    <span id="coffee-qty">0</span>
+    <button onclick="increase('coffee')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Biscuit A</span> <span>₹5</span>
+    <button onclick="decrease('biscuitA')">-</button>
+    <span id="biscuitA-qty">0</span>
+    <button onclick="increase('biscuitA')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Biscuit B</span> <span>₹3</span>
+    <button onclick="decrease('biscuitB')">-</button>
+    <span id="biscuitB-qty">0</span>
+    <button onclick="increase('biscuitB')">+</button>
+  </div>
+  
+  <div class="menu-item">
+    <span>Samosa</span> <span>₹10</span>
+    <button onclick="decrease('samosa')">-</button>
+    <span id="samosa-qty">0</span>
+    <button onclick="increase('samosa')">+</button>
+  </div>
+  
+  <div class="menu-item">
+    <span>Sweet</span> <span>₹10</span>
+    <button onclick="decrease('sweet')">-</button>
+    <span id="sweet-qty">0</span>
+    <button onclick="increase('sweet')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Cake</span> <span>₹6</span>
+    <button onclick="decrease('cake')">-</button>
+    <span id="cake-qty">0</span>
+    <button onclick="increase('cake')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Ooty Varki</span> <span>₹5</span>
+    <button onclick="decrease('ooty_varki')">-</button>
+    <span id="ooty_varki-qty">0</span>
+    <button onclick="increase('ooty_varki')">+</button>
+  </div>
+
+  <div class="menu-item">
+    <span>Groundnut Burfi</span> <span>₹5</span>
+    <button onclick="decrease('groundnut_burfi')">-</button>
+    <span id="groundnut_burfi-qty">0</span>
+    <button onclick="increase('groundnut_burfi')">+</button>
+  </div>
+  
+  <h2>Total: ₹<span id="total">0</span></h2>
+  <a id="payLink" href="#" target="_blank">
+    <button>Pay with UPI</button>
+  </a>
+
+  <!-- QR Fallback for Desktop -->
+  <div id="qrContainer">
+    <p>Scan this QR to Pay</p>
+    <img id="qrCode" src="" alt="UPI QR Code">
+  </div>
+
+  <script>
+    let prices = {
+      tea: 10,
+      coffee: 15,
+      biscuitA: 5,
+      biscuitB: 3,
+      samosa: 10,
+      sweet: 10,
+      cake: 6,
+      ooty_varki: 5,
+      groundnut_burfi: 5
+    };
+
+    let quantities = {
+      tea: 0,
+      coffee: 0,
+      biscuitA: 0,
+      biscuitB: 0,
+      samosa: 0,
+      sweet: 0,
+      cake: 0,
+      ooty_varki: 0,
+      groundnut_burfi: 0
+    };
+
+    function increase(item) {
+      quantities[item]++;
+      update();
+    }
+
+    function decrease(item) {
+      if (quantities[item] > 0) {
+        quantities[item]--;
+        update();
+      }
+    }
+
+    function update() {
   let total = 0;
 
   for (let item in quantities) {
@@ -44,12 +186,26 @@ function update() {
 
   document.getElementById("total").innerText = total;
 
-  // UPI payment link
-  let upiId = "paytmqr5yc0n7@ptys";  
-  let name = encodeURIComponent("SRIMATHI S");
+  let upiId = "premanandhan@okhdfcbank";  
+  let name = encodeURIComponent("Srimathi Tea Stall");
   let note = encodeURIComponent("Order from Srimathi Tea Stall");
   let uri = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR&tn=${note}`;
 
-  // ✅ Only update the Pay button, don't auto-redirect
   document.getElementById("payLink").href = uri;
+
+  // Show QR only if total > 0
+  if (total > 0) {
+    document.getElementById("qrContainer").style.display = "block";
+
+    // Clear old QR before creating new
+    document.getElementById("qrCode").innerHTML = "";
+
+    new QRCode(document.getElementById("qrCode"), {
+      text: uri,
+      width: 200,
+      height: 200
+    });
+  } else {
+    document.getElementById("qrContainer").style.display = "none";
+  }
 }
