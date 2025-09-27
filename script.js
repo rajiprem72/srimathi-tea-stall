@@ -2,14 +2,24 @@ let prices = {
   tea: 10,
   coffee: 15,
   biscuitA: 5,
-  biscuitB: 3
+  biscuitB: 3,
+  samosa: 10,
+  sweet: 10,
+  cake: 6,
+  ooty_varki: 5,
+  groundnut_burfi: 5
 };
 
 let quantities = {
   tea: 0,
   coffee: 0,
   biscuitA: 0,
-  biscuitB: 0
+  biscuitB: 0,
+  samosa: 0,
+  sweet: 0,
+  cake: 0,
+  ooty_varki: 0,
+  groundnut_burfi: 0
 };
 
 function increase(item) {
@@ -35,7 +45,7 @@ function update() {
   document.getElementById("total").innerText = total;
 
   // Change UPI ID here 👇
-  let upiId = "paytmqr5ycOn7@ptys";  
+  let upiId = "paytmqr5yc0n7@ptys";  
   let name = "SRIMATHI S";
   let link = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR`;
 
