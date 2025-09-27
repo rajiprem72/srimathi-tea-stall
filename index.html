@@ -2,109 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Srimathi Tea Stall - Digital Menu</title>
-  <link rel="stylesheet" href="style.css">
+  <title>SriMathi Tea Stall</title>
   <style>
-    .designer-note {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      font-size: 12px;
-      text-align: right;
-      color: gray;
-    }
-    #qrContainer {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
-    }
-    #qrContainer img {
-      width: 200px;
-      height: 200px;
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .item { margin: 10px 0; }
+    button { margin: 0 5px; }
+    #total { font-weight: bold; font-size: 20px; margin-top: 20px; }
+    #payBtn { 
+      margin-top: 20px; 
+      padding: 10px 20px; 
+      background: green; 
+      color: white; 
+      border: none; 
+      font-size: 18px; 
+      border-radius: 8px;
     }
   </style>
-<!-- Add this in your HTML head (before </head>) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 </head>
 <body>
-  <h1>☕ Srimathi Tea Stall 🫖</h1>
-  <p>Fresh, Hot & Made with Love</p>
+  <h2>Welcome to Srimathi Tea Stall ☕🫖</h2>
 
-  <div class="menu-item">
-    <span>Tea</span> <span>₹10</span>
+  <div class="item">Tea (₹10): 
     <button onclick="decrease('tea')">-</button>
     <span id="tea-qty">0</span>
     <button onclick="increase('tea')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Coffee</span> <span>₹15</span>
+  <div class="item">Coffee (₹15): 
     <button onclick="decrease('coffee')">-</button>
     <span id="coffee-qty">0</span>
     <button onclick="increase('coffee')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Biscuit A</span> <span>₹5</span>
+  <div class="item">Biscuit A (₹5): 
     <button onclick="decrease('biscuitA')">-</button>
     <span id="biscuitA-qty">0</span>
     <button onclick="increase('biscuitA')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Biscuit B</span> <span>₹3</span>
+  <div class="item">Biscuit B (₹3): 
     <button onclick="decrease('biscuitB')">-</button>
     <span id="biscuitB-qty">0</span>
     <button onclick="increase('biscuitB')">+</button>
   </div>
-  
-  <div class="menu-item">
-    <span>Samosa</span> <span>₹10</span>
+
+  <div class="item">Samosa (₹10): 
     <button onclick="decrease('samosa')">-</button>
     <span id="samosa-qty">0</span>
     <button onclick="increase('samosa')">+</button>
   </div>
-  
-  <div class="menu-item">
-    <span>Sweet</span> <span>₹10</span>
+
+  <div class="item">Sweet (₹10): 
     <button onclick="decrease('sweet')">-</button>
     <span id="sweet-qty">0</span>
     <button onclick="increase('sweet')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Cake</span> <span>₹6</span>
+  <div class="item">Cake (₹6): 
     <button onclick="decrease('cake')">-</button>
     <span id="cake-qty">0</span>
     <button onclick="increase('cake')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Ooty Varki</span> <span>₹5</span>
+  <div class="item">Ooty Varki (₹5): 
     <button onclick="decrease('ooty_varki')">-</button>
     <span id="ooty_varki-qty">0</span>
     <button onclick="increase('ooty_varki')">+</button>
   </div>
 
-  <div class="menu-item">
-    <span>Groundnut Burfi</span> <span>₹5</span>
+  <div class="item">Groundnut Burfi (₹5): 
     <button onclick="decrease('groundnut_burfi')">-</button>
     <span id="groundnut_burfi-qty">0</span>
     <button onclick="increase('groundnut_burfi')">+</button>
   </div>
-  
-  <h2>Total: ₹<span id="total">0</span></h2>
-  <a id="payLink" href="#" target="_blank">
-    <button>Pay with UPI</button>
-  </a>
-<!-- QR Fallback for Desktop -->
-<div id="qrContainer" style="display:none; text-align:center; margin-top:20px;">
-  <p>Scan this QR to Pay</p>
-  <div id="qrCode"></div>
-</div>
 
+  <div id="total">Total: ₹0</div>
+
+  <button id="payBtn" onclick="payNow()">Pay Now</button>
 
   <script>
     let prices = {
@@ -145,37 +119,31 @@
 
     function update() {
       let total = 0;
-
       for (let item in quantities) {
         document.getElementById(item + "-qty").innerText = quantities[item];
         total += quantities[item] * prices[item];
       }
+      document.getElementById("total").innerText = "Total: ₹" + total;
+    }
 
-      document.getElementById("total").innerText = total;
-
-      let upiId = "paytmqr5yc0n7@ptys";  
-      let name = encodeURIComponent("Srimathi S");
-      let note = encodeURIComponent("Order from Srimathi Tea Stall");
-      let uri = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR&tn=${note}`;
-
-      document.getElementById("payLink").href = uri;
-
-      // Show QR only if total > 0
-      if (total > 0) {
-        document.getElementById("qrContainer").style.display = "block";
-        document.getElementById("qrCode").src = 
-          `https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${encodeURIComponent(uri)}`;
-      } else {
-        document.getElementById("qrContainer").style.display = "none";
+    function payNow() {
+      let total = 0;
+      for (let item in quantities) {
+        total += quantities[item] * prices[item];
       }
+
+      if (total <= 0) {
+        alert("Please select at least one item before paying.");
+        return;
+      }
+
+      let upiId = "paytmqr5yc0n7@ptys";  // Your UPI ID
+      let name = encodeURIComponent("Srimathi S");
+      let note = encodeURIComponent("Tea Shop");
+
+      let uri = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR&tn=${note}`;
+      window.location.href = uri;  // This will open UPI apps on mobile
     }
   </script>
-
-  <!-- Footer Note -->
-  <div class="designer-note">
-    Designed by <br>
-    Premanandhan Narayanan <br>
-    WhatsApp - +91 98844 86609
-  </div>
 </body>
 </html>
