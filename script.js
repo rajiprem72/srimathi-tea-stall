@@ -186,9 +186,9 @@ function decrease(item) {
 
   document.getElementById("total").innerText = total;
 
-  let upiId = "premanandhan@okhdfcbank";  
-  let name = encodeURIComponent("Srimathi S");
-  let note = encodeURIComponent("Order from Srimathi Tea Stall");
+  let upiId = "premanandhan@fbl";  
+  let name = encodeURIComponent("Premanandhan");
+  let note = encodeURIComponent("Tea Shop");
   let uri = `upi://pay?pa=${upiId}&pn=${name}&am=${total}&cu=INR&tn=${note}`;
 
   document.getElementById("payLink").href = uri;
